@@ -1,0 +1,15 @@
+#1#
+this has //italic// text
+#2#
+this has //multi-line
+italic// text
+#3#
+this has // spaced italic//
+#4#
+this also has //spaced italic //
+#5#
+this is a third // spaced italic // entry
+#6#
+this is //
+newline italic
+// entry

@@ -1,0 +1,15 @@
+#1#
+this has **bold** text
+#2#
+this has **multi-line
+bold** text
+#3#
+this has ** spaced bold**
+#4#
+this also has **spaced bold **
+#5#
+this is a third ** spaced bold ** entry
+#6#
+this is **
+newline bold
+** entry
