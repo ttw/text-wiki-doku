@@ -1,24 +1,34 @@
 #1#
-this has **bold** text
+plain text.
 #2#
+	plain text.
+#2#
+this has **bold** text more
+#3#
 this has **multi-line
 bold** text
-#3#
-this has ** spaced bold**
 #4#
-this also has **spaced bold **
+this has **multi-line
+	bold** text
 #5#
-this is a third ** spaced bold ** entry
+this has **multi-line
+     bold** text
 #6#
+this has ** spaced bold**
+#7#
+this also has **spaced bold ** with some ; punctuation.
+#8#
+this is a third ** spaced bold ** entry
+#9#
 this is **
 newline bold
 ** entry
-#7#
+#10#
 this has //italic// text
-#8#
+#11#
 this has //multi-line
 italic// text
-#9#
+#12#
 this has //**italic bold**// text
-#10#
+#13#
 this has **//bold italic//** text

@@ -1,0 +1,69 @@
+%%
+
+tests:
+	tests test {print $_[2],"\n";}
+|	# empty
+;
+
+test:
+	SPLIT EOL block {print @{$_[3]},"\n";}
+|	EOI
+;
+
+block:
+	text_block
+|	indent_block
+|	quote_block
+;
+
+indent_block:
+	INDENT text_block { [$_[1],$_[2]]; }
+;
+
+quote_block:
+	QUOTE text_block { [$_[1],$_[2]]; }
+;
+
+text_block:
+	token {[$_[1]];}
+|	format {[$_[1]];}
+|	text_block token { push(@{$_[1]},$_[2]); $_[1]; }
+|	text_block format { push(@{$_[1]},$_[2]); $_[1]; }
+|	text_block INDENT { push(@{$_[1]},$_[2]); $_[1]; }
+;
+
+token:
+	WORD
+|	BLANK
+|	PUNCT
+|	GRAPH
+|	EOL
+;
+
+format:
+	B
+|	I
+|	U
+;
+
+%%
+use Carp ;
+use Text::WikiDoku::Lex ;
+use IO::File ;
+
+sub run
+{
+	my $self = shift ;
+	croak( "No input" )
+		unless( @_ > 0 ) ;
+	my $lex0 = Text::WikiDoku::Lex->new() ;
+	if( @_ > 1 )
+	{
+		$lex0->from( @_ ) ;
+	} else {
+		$lex0->from( $_[0] ) ;
+	} ;
+	$self->YYParse(
+			yylex => sub{return $lex0->yylex();},
+			yydebug => 0x00 ) ;
+} ;
