@@ -17,11 +17,11 @@ block:
 ;
 
 indent_block:
-	INDENT text_block { [$_[1],$_[2]]; }
+	INDENT text_block { unshift(@{$_[2]},$_[1]); $_[2]; }
 ;
 
 quote_block:
-	QUOTE text_block { [$_[1],$_[2]]; }
+	QUOTE text_block { unshift(@{$_[2]},$_[1]); $_[2]; }
 ;
 
 text_block:
