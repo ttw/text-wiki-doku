@@ -36,12 +36,15 @@ my @_tokens0 =
 		Parse::Token::Simple->new(
 			Name => 'QUOTE',
 			Regex => '^[[:blank:]]*>+'),
-	# NOTE: Theres is some oddity around the following two tokens where order becomes important, even though the INDENT rule should obviously match "longer" (and therefore preferred).
+	# NOTE: Theres is some oddity around the following few tokens (EMPTY_LINE, INDENT, SPACE) where order becomes important, even though the length should give preference.
+		Parse::Token::Simple->new(
+			Name => 'EMPTY_LINE',
+			Regex => '^[[:blank:]]+$'),
 		Parse::Token::Simple->new(
 			Name => 'INDENT',
-			Regex => '^[[:blank:]]+'),
+			Regex => '^[[:blank:]]'),
 		Parse::Token::Simple->new(
-			Name => 'BLANK',
+			Name => 'SPACE',
 			Regex => '[[:blank:]]'),
 		Parse::Token::Simple->new(
 			Name => 'EOL',
@@ -63,7 +66,7 @@ sub yylex
 	my $self = shift ;
 	my $tok0 = $self->next() ;
 #	print STDERR "LEX_DEBUG?:",$tok0->name(),":",$tok0->text(),"\n" ;
-	return ('',undef) if( $tok0->eoi() ) ;
+	return ('',undef) if( $self->eoi() ) ;
 	return ($tok0->name(),$tok0->text()) ;
 } ;
 

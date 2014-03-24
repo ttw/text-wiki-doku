@@ -1,43 +1,51 @@
 %%
 
-tests:
-	tests test {print $_[2],"\n";}
-|	# empty
+doku:
+	doku_blocks
 ;
 
-test:
-	SPLIT EOL block {print @{$_[3]},"\n";}
-|	EOI
+doku_blocks:
+	# empty
+|	doku_blocks doku_block
 ;
 
-block:
-	text_block
-|	indent_block
-|	quote_block
+doku_block:
+	text_block eob { print "BLOCK\n",@{$_[1]},"\n"; $_[1]; }
+|	indent_block eob { print "BLOCK\n",@{$_[1]},"\n"; $_[1]; }
+;
+
+eob:
+	BLANK_LINE
+|	EOI ;
+
+text_block:
+	line EOL
+|	text_block line EOL { push(@{$_[1]},@{$_[2]}); $_[1]; }
+|	text_block indent_line EOL { push(@{$_[1]},@{$_[2]}); $_[1]; }
 ;
 
 indent_block:
-	INDENT text_block { unshift(@{$_[2]},$_[1]); $_[2]; }
+	indent_line EOL
+|	indent_block line EOL
+|	indent_block indent_line EOL
 ;
 
-quote_block:
-	QUOTE text_block { unshift(@{$_[2]},$_[1]); $_[2]; }
+indent_line:
+	INDENT line { unshift(@{$_[2]},$_[1]); $_[2]; }
 ;
 
-text_block:
+line:
 	token {[$_[1]];}
 |	format {[$_[1]];}
-|	text_block token { push(@{$_[1]},$_[2]); $_[1]; }
-|	text_block format { push(@{$_[1]},$_[2]); $_[1]; }
-|	text_block INDENT { push(@{$_[1]},$_[2]); $_[1]; }
+|	line SPACE { push(@{$_[1]},$_[2]); $_[1]; }
+|	line token { push(@{$_[1]},$_[2]); $_[1]; }
+|	line format { push(@{$_[1]},$_[2]); $_[1]; }
 ;
 
 token:
 	WORD
-|	BLANK
 |	PUNCT
 |	GRAPH
-|	EOL
 ;
 
 format:
