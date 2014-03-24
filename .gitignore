@@ -14,5 +14,5 @@ META.yml
 MYMETA.yml
 nytprof.out
 pm_to_blib
-lib/Text/WikiDoku/Parse.pm
-lib/Text/WikiDoku/Parse.output
+lib/Text/WikiDoku/Yapp.pm
+lib/Text/WikiDoku/Yapp.output

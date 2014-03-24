@@ -5,7 +5,7 @@
 use warnings ;
 use strict ;
 
-use Text::WikiDoku::Parse ;
+use Text::WikiDoku::Yapp ;
 
-my $parse0 = Text::WikiDoku::Parse->new() ;
+my $parse0 = Text::WikiDoku::Yapp->new() ;
 $parse0->run( \*STDIN ) ;
